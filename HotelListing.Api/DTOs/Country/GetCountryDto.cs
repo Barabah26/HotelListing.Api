@@ -1,9 +1,12 @@
-﻿namespace HotelListing.Api.DTOs.Country;
+﻿using HotelListing.Api.DTOs.Hotel;
+
+namespace HotelListing.Api.DTOs.Country;
 
 public record GetCountryDto(
     int Id,
     string Name,
-    string ShortName
+    string ShortName,
+    List<GetHotelSlimDto>? Hotels
 );
 
 
