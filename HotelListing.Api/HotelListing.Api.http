@@ -1,7 +1,7 @@
 @HotelListing.Api_HostAddress = http://localhost:5220
 
 ###
-@id=3
+@id=1
 GET {{HotelListing.Api_HostAddress}}/api/countries
 
 ###
@@ -45,7 +45,7 @@ Content-Type: application/json
   "Name": "Test Hotel",
   "Address": "123 Main St",
   "Rating": 4.5,
-  "CountryId": 3
+  "CountryId": 1
 }
 
 ###
