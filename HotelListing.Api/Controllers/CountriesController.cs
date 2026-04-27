@@ -1,8 +1,9 @@
+using HostelListing.Api.Data;
+using HotelListing.Api.Contracts;
+using HotelListing.Api.DTOs.Country;
+using HotelListing.Api.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using HostelListing.Api.Data;
-using HotelListing.Api.DTOs.Country;
-using HotelListing.Api.Contracts;
 
 namespace HotelListing.Api.Controllers;
 
@@ -41,7 +42,21 @@ public class CountriesController(ICountriesService countriesService) : Controlle
             return BadRequest();
         }
 
-        await countriesService.UpdateCountryAsync(id, countryDto);        
+        try
+        {
+            await countriesService.UpdateCountryAsync(id, countryDto);
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!await countriesService.CountryExistsAsync(id))
+            {
+                return NotFound();
+            }
+            else
+            {
+                throw;
+            }
+        }
 
         return NoContent();
     }
