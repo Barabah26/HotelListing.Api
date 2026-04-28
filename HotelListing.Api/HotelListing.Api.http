@@ -1,7 +1,7 @@
 @HotelListing.Api_HostAddress = http://localhost:5220
 
 ###
-@id=1
+@id=4
 GET {{HotelListing.Api_HostAddress}}/api/countries
 
 ###
@@ -10,8 +10,8 @@ POST {{HotelListing.Api_HostAddress}}/api/countries
 Content-Type: application/json
 
 {
-  "name": "Test Country",
-  "shortName": "TC"
+  "name": "TestCountry",
+  "shortName": "IC"
 }
 
 ###
@@ -42,11 +42,10 @@ POST {{HotelListing.Api_HostAddress}}/api/hotels
 Content-Type: application/json
 
 {
-  "Id": 3,
   "Name": "Moon Palace",
   "Address": "Ocho Rios, Jamaica",
-  "Rating": 4.5,
-  "CountryId": 2
+  "Rating": 5,
+  "CountryId": 3
 }
 
 ###
@@ -67,7 +66,7 @@ Content-Type: application/json
   "Name": "Ocean Coral",
   "Address": "Trelawny, Jamaica",
   "Rating": 4.5,
-  "CountryId": 1
+  "CountryId": 100
 }
 
 
