@@ -71,3 +71,12 @@ Content-Type: application/json
 
 
 ###
+POST {{HotelListing.Api_HostAddress}}/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "barabakh@gmail.com",
+  "password": "P@ssword12345",
+  "firstName": "Stepan",
+  "lastName": "Barabakh"
+}
