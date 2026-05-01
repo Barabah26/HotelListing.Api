@@ -23,7 +23,7 @@ public class AuthController(IUserService userService) : BaseApiController
         return ToActionResult(result);
     }
 
-    [HttpPost("register")]
+    [HttpPost("login")]
     public async Task<ActionResult<string>> Login(LoginDto loginDto)
     {
         var result = await userService.LoginAsync(loginDto);
