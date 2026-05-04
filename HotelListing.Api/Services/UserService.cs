@@ -21,25 +21,28 @@ public class UserService(UserManager<ApplicationUser> userManager, IConfiguratio
             Email = registerUserDto.Email,
             FirstName = registerUserDto.FirstName,
             LastName = registerUserDto.LastName,
-            UserName = registerUserDto.Password
+            UserName = registerUserDto.Email
         };
 
         var result = await userManager.CreateAsync(user, registerUserDto.Password);
-
         if (!result.Succeeded)
         {
             var errors = result.Errors.Select(e => new Error(ErrorCodes.BadRequest, e.Description)).ToArray();
             return Result<RegisteredUserDto>.BadRequest(errors);
         }
 
+        await userManager.AddToRoleAsync(user, registerUserDto.Role);
+
         var registeredUser = new RegisteredUserDto
         {
             Email = user.Email,
             FirstName = user.FirstName,
             LastName = user.LastName,
-            Id = user.Id
+            Id = user.Id,
+            Role = registerUserDto.Role,
         };
 
+        // Optional: Send confirmation Email
         return Result<RegisteredUserDto>.Success(registeredUser);
     }
 
