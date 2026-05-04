@@ -1,7 +1,7 @@
 @HotelListing.Api_HostAddress = https://localhost:7137
 
 @json = application/json
-@apiKey=dXNlcjFAbG9jYWxob3N0LmNvbTpQQHNzd29yZDE=
+@apiKey=dXNlcjFAbG9jYWxob3N0LmNvbTpQQHNzrbd29yZDE=
 
 ###
 @id=1

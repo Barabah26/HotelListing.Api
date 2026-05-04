@@ -15,11 +15,6 @@ public class HotelListingDbContext(DbContextOptions<HotelListingDbContext> optio
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-
-        builder.Entity<ApiKey>(b =>
-        {
-            b.HasIndex(k => k.Key).IsUnique();
-        });
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
 }
