@@ -10,7 +10,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace HotelListing.Api.Services;
+namespace HotelListing.Api.Contracts;
 
 public class UserService(UserManager<ApplicationUser> userManager, IConfiguration configuration) : IUserService
 {

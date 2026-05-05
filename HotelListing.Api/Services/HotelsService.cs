@@ -8,7 +8,7 @@ using HotelListing.Api.DTOs.Hotel;
 using HotelListing.Api.Results;
 using Microsoft.EntityFrameworkCore;
 
-namespace HotelListing.Api.Services;
+namespace HotelListing.Api.Contracts;
 
 public class HotelsService(HotelListingDbContext context,
     ICountriesService countriesService,

@@ -3,7 +3,7 @@ using HotelListing.Api.Contracts;
 using HotelListing.Api.Data;
 using HotelListing.Api.Handler;
 using HotelListing.Api.MappingProfiles;
-using HotelListing.Api.Services;
+using HotelListing.Api.Contracts;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -26,11 +26,14 @@ builder.Services.AddScoped<ICountriesService, CountriesService>();
 builder.Services.AddScoped<IHotelsService, HotelsService>();
 builder.Services.AddScoped<IUserService,  UserService>();
 builder.Services.AddScoped<IApiKeyValidatorService, ApiKeyValidatorService>();
+builder.Services.AddScoped<IBookingService, BookingService>();
+
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<HotelListingDbContext>()
     .AddDefaultTokenProviders();
 
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
