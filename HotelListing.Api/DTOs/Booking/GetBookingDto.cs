@@ -11,10 +11,3 @@ public record GetBookingDto(
     string Status,
     DateTime CreatedAtUtc,
     DateTime? UpdatedAtUtc);
-
-
-public record CreateBookingDto(
-    int HotelId,
-    DateOnly CheckIn,
-    DateOnly CheckOut,
-    int Guests);

@@ -22,4 +22,19 @@ public class HotelBookingsController(IBookingService bookingService) : BaseApiCo
         var result = await bookingService.CreateBookingAsync(createBookingDto);
         return ToActionResult(result);
     }
+
+    [HttpPut("{bookingId:int}")]
+    public async Task<ActionResult<GetBookingDto>> UpdateBooking([FromRoute] int hotelId, [FromRoute] int bookingId, [FromBody] UpdateBookingDto updateBookingDto)
+    {
+        var result = await bookingService.UpdateBookingAsync(updateBookingDto);
+        return ToActionResult(result);
+    }
+
+    [HttpPut("{bookingId:int}")]
+    public async Task<IActionResult> CancelBooking([FromRoute] int hotelId, [FromRoute] int bookingId)
+    {
+        var result = await bookingService.CancelBookingAsync(hotelId, bookingId);
+        return ToActionResult(result);
+    }
+
 }
