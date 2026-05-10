@@ -12,7 +12,7 @@ using System.Text;
 
 namespace HotelListing.Api.Contracts;
 
-public class UserService(UserManager<ApplicationUser> userManager, IConfiguration configuration) : IUserService
+public class UserService(UserManager<ApplicationUser> userManager, IConfiguration configuration, IHttpContextAccessor httpContextAccessor) : IUserService
 {
     public async Task<Result<RegisteredUserDto>> RegisterAsync(RegisterUserDto registerUserDto)
     {
@@ -65,6 +65,14 @@ public class UserService(UserManager<ApplicationUser> userManager, IConfiguratio
 
         return Result<string>.Success(token);
     }
+
+    public string UserId => httpContextAccessor?
+        .HttpContext?
+        .User?
+        .FindFirst(JwtRegisteredClaimNames.Sub)?.Value ?? httpContextAccessor?
+        .HttpContext?
+        .User?
+        .FindFirst(ClaimTypes.NameIdentifier)?.Value ?? string.Empty;
 
     private async Task<string> GenerateToken(ApplicationUser user)
     {

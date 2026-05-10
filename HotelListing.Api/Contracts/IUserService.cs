@@ -5,6 +5,8 @@ namespace HotelListing.Api.Contracts
 {
     public interface IUserService
     {
+        string UserId { get; }
+
         Task<Result<string>> LoginAsync(LoginDto loginDto);
         Task<Result<RegisteredUserDto>> RegisterAsync(RegisterUserDto registerUserDto);
     }
