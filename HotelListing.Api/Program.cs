@@ -1,16 +1,18 @@
-using HotelListing.Api.Constants;
-using HotelListing.Api.Contracts;
-using HotelListing.Api.Data;
+using HotelListing.Api.Application.Contracts;
+using HotelListing.Api.Application.MappingProfiles;
+using HotelListing.Api.Application.Services;
+using HotelListing.Api.Common.Constants;
+using HotelListing.Api.Common.Models;
+using HotelListing.Api.Domain;
 using HotelListing.Api.Handler;
-using HotelListing.Api.MappingProfiles;
-using HotelListing.Api.Contracts;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using System.Reflection;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,34 +37,38 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddDefaultTokenProviders();
 
 builder.Services.AddHttpContextAccessor();
+builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
+var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>() ?? new JwtSettings();
+if (string.IsNullOrWhiteSpace(jwtSettings.Key))
+{
+    throw new InvalidOperationException("JwtSettings:Key is not configured.");
+}
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
 })
-    .AddJwtBearer(options =>
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
     {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-
-            ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
-            ValidAudience = builder.Configuration["JwtSettings:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Key"])),
-            ClockSkew = TimeSpan.Zero
-        };
-    })
-    .AddScheme<AuthenticationSchemeOptions, BasicAuthentificationHandler>(AuthenticationDefaults.BasicScheme, _ => { })
-    .AddScheme<AuthenticationSchemeOptions, ApiKeyAuthenticationHandler>(AuthenticationDefaults.ApiKeyScheme, _ => { });
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = jwtSettings.Issuer,
+        ValidAudience = jwtSettings.Audience,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key)),
+        ClockSkew = TimeSpan.Zero // Default is 5 minutes
+    };
+})
+.AddScheme<AuthenticationSchemeOptions, BasicAuthentificationHandler>(AuthenticationDefaults.BasicScheme, _ => { })
+.AddScheme<AuthenticationSchemeOptions, ApiKeyAuthenticationHandler>(AuthenticationDefaults.ApiKeyScheme, _ => { });
 builder.Services.AddAuthorization();
 
-builder.Services.AddAutoMapper(cfg => { }, Assembly.GetExecutingAssembly());
-
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+builder.Services.AddAutoMapper(cfg => { }, typeof(HotelMappingProfile).Assembly);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -79,6 +85,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

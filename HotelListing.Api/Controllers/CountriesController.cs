@@ -1,10 +1,8 @@
-using HostelListing.Api.Data;
-using HotelListing.Api.Contracts;
-using HotelListing.Api.DTOs.Country;
-using HotelListing.Api.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using HotelListing.Api.Application.DTOs.Country;
+using HotelListing.Api.Application.Contracts;
 
 namespace HotelListing.Api.Controllers;
 
