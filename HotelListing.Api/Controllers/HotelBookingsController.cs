@@ -37,4 +37,18 @@ public class HotelBookingsController(IBookingService bookingService) : BaseApiCo
         return ToActionResult(result);
     }
 
+    [HttpPut("{bookingId:int}/admin/cancel")]
+    public async Task<IActionResult> AdminCancelBooking([FromRoute] int hotelId, [FromRoute] int bookingId)
+    {
+        var result = await bookingService.AdminCancelBookingAsync(hotelId, bookingId);
+        return ToActionResult(result);
+    }
+
+    [HttpPut("{bookingId:int}/admin/confirm")]
+    public async Task<IActionResult> AdminConfirmBooking([FromRoute] int hotelId, [FromRoute] int bookingId)
+    {
+        var result = await bookingService.AdminConfirmBookingAsync(hotelId, bookingId);
+        return ToActionResult(result);
+    }
+
 }

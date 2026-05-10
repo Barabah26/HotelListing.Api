@@ -220,4 +220,60 @@ public class BookingService(HotelListingDbContext context, IHttpContextAccessor 
 
         return Result.Success();
     }
+
+    public async Task<Result> AdminCancelBookingAsync(int hotelId, int bookingId)
+    {
+        var userId = httpContextAccessor?.HttpContext?.User?.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
+
+        var isHotelAdminUser = await context.HotelAdmins.AnyAsync(q => q.UserId == userId && q.HotelId == hotelId);
+
+        if (!isHotelAdminUser)
+            return Result.Failure(new Error(ErrorCodes.Forbid, $"You are not an admin of the selected Hotel."));
+
+        var booking = await context.Bookings
+            .Include(b => b.Hotel)
+            .FirstOrDefaultAsync(b =>
+                b.Id == bookingId
+                && b.HotelId == hotelId);
+
+        if (booking is null)
+            return Result.Failure(new Error(ErrorCodes.NotFound, $"Booking '{bookingId}' was not found."));
+
+        if (booking.Status == BookingStatus.Cancelled)
+            return Result.Failure(new Error(ErrorCodes.Conflict, "This booking has already been cancelled."));
+
+        booking.Status = BookingStatus.Cancelled;
+        booking.UpdatedAtUtc = DateTime.UtcNow;
+        await context.SaveChangesAsync();
+
+        return Result.Success();
+    }
+
+    public async Task<Result> AdminConfirmBookingAsync(int hotelId, int bookingId)
+    {
+        var userId = httpContextAccessor?.HttpContext?.User?.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
+
+        var isHotelAdminUser = await context.HotelAdmins.AnyAsync(q => q.UserId == userId && q.HotelId == hotelId);
+
+        if (!isHotelAdminUser)
+            return Result.Failure(new Error(ErrorCodes.NotFound, $"You are not an admin of the selected Hotel."));
+
+        var booking = await context.Bookings
+            .Include(b => b.Hotel)
+            .FirstOrDefaultAsync(b =>
+                b.Id == bookingId
+                && b.HotelId == hotelId);
+
+        if (booking is null)
+            return Result.Failure(new Error(ErrorCodes.NotFound, $"Booking '{bookingId}' was not found."));
+
+        if (booking.Status == BookingStatus.Cancelled)
+            return Result.Failure(new Error(ErrorCodes.Conflict, "This booking has already been cancelled."));
+
+        booking.Status = BookingStatus.Confirmed;
+        booking.UpdatedAtUtc = DateTime.UtcNow;
+        await context.SaveChangesAsync();
+
+        return Result.Success();
+    }
 }

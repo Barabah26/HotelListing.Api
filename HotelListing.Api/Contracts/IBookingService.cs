@@ -9,4 +9,6 @@ public interface IBookingService
     Task<Result<GetBookingDto>> CreateBookingAsync(CreateBookingDto dto);
     Task<Result<GetBookingDto>> UpdateBookingAsync(UpdateBookingDto updateBookingDto);
     Task<Result> CancelBookingAsync(int hotelId, int bookingId);
+    Task<Result> AdminCancelBookingAsync(int hotelId, int bookingId);
+    Task<Result> AdminConfirmBookingAsync(int hotelId, int bookingId);
 }
