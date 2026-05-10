@@ -13,4 +13,5 @@ public class RegisterUserDto
     [Required, MaxLength(100)]
     public string LastName { get; set; } = string.Empty;
     public string Role { get; set; } = "User";
+    public int? AssociatedHotelId { get; set; }
 }

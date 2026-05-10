@@ -15,8 +15,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjIzYjQ3Y
 Content-Type: {{json}}
 
 {
-  "name": "Test Admin Country",
-  "shortName": "TAC"
+  "name": "Ocean Coral",
+  "shortName": "OC"
 }
 
 ###
@@ -44,8 +44,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4MjFlNzYwZ
 
 POST {{HotelListing.Api_HostAddress}}/api/hotels
 Content-Type: {{json}}
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4MjFlNzYwZi04NjM2LTQ2ZjQtOTgyNi1kOGUxNTE1ODQxNjIiLCJlbWFpbCI6ImhvdGVsYWRtaW5AbG9jYWxob3N0LmNvbSIsImp0aSI6ImEzZmQ5ZjI1LTJjMTAtNDE3Mi04ZWQ0LTc2OWNkNGUzYjczMCIsIm5hbWUiOiJBZG1pbiwgSG90ZWwiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJIb3RlbCBBZG1pbiIsImV4cCI6MTc1NzM1MjcyMywiaXNzIjoiSG90ZWxMaXN0aW5nQVBJIiwiYXVkIjoiSG90ZWxMaXN0aW5nQVBJQ2xpZW50In0.KvzcCukNYyE4xfza8ZONwrK1QCiAFwFSMNsq-rrLGNU
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwNzAyOWQwNC1hNWEyLTQ0NDQtODE1Yi02NzUyYzM0ZWQ4NzgiLCJlbWFpbCI6InVzZXJAbG9jYWxob3N0LmNvbSIsImp0aSI6IjhiNmJmMGMyLWVkNzItNDdjMy04ZmM5LTI1OTQ1YWNiYzQwNyIsIm5hbWUiOiJMYXN0LCBGaXJzdCIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluaXN0cmF0b3IiLCJleHAiOjE3Nzg0MTMyMDUsImlzcyI6IkhvdGVsTGlzdGluZ0FQSSIsImF1ZCI6IkhvdGVsTGlzdGluZ0FQSUNsaWVudCJ9.76u8QWNP3YeaXZOG5_vuN8jg6IiW0XWDZxnzDppeEhI
 {
   "Name": "Moon Palace",
   "Address": "Ocho Rios, Jamaica",

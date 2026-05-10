@@ -38,7 +38,7 @@ public class HotelBookingsController(IBookingService bookingService) : BaseApiCo
     [HttpPut("{bookingId:int}")]
     public async Task<ActionResult<GetBookingDto>> UpdateBooking([FromRoute] int hotelId, [FromRoute] int bookingId, [FromBody] UpdateBookingDto updateBookingDto)
     {
-        var result = await bookingService.UpdateBookingAsync(updateBookingDto);
+        var result = await bookingService.UpdateBookingAsync(hotelId, bookingId, updateBookingDto);
         return ToActionResult(result);
     }
 
