@@ -36,6 +36,21 @@ Content-Type: {{json}}
   "name": "Jamaica",
   "shortName": "JM"
 }
+
+###
+
+PATCH {{HotelListing.Api_HostAddress}}/api/countries/{{countryId}}
+Authorization: Bearer {{token}}
+Content-Type: application/json-patch+json
+
+[
+  {
+    "op": "replace",  
+    "path": "/shortName",
+    "value": "TAC"
+  }
+]
+
 ###
 
 GET {{HotelListing.Api_HostAddress}}/api/hotels
