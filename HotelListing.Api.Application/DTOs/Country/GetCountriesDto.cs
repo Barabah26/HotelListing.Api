@@ -7,4 +7,3 @@ public class GetCountriesDto
     public string ShortName { get; set; } = string.Empty;
 }
 
-

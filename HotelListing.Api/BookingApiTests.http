@@ -10,11 +10,11 @@ POST {{host}}/api/auth/register
 Content-Type: application/json
 
 {
-  "email": "admin2@localhost.com",
+  "email": "hoteladmin2@localhost.com",
   "password": "P@ssword1",
   "firstName":"Hotel",
   "lastName": "Admin",
-  "role": "Administrator",
+  "role": "Hotel Admin",
   "associatedHotelId": 3
 }
 ###
@@ -22,7 +22,7 @@ POST {{host}}/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "admin2@localhost.com",
+  "email": "hoteladmin2@localhost.com",
   "password": "P@ssword1"
 }
 ###
@@ -36,7 +36,7 @@ Content-Type: application/json
 
 ###
 # 1. CreateBookingDto - Happy path (3 nights)
-POST {{host}}/api/hotels/{{hotelId}}/booking
+POST {{host}}/api/hotels/{{hotelId}}/bookings
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
@@ -166,7 +166,12 @@ PUT {{host}}/api/hotels/{{hotelId}}/bookings/{{bookingId}}/cancel
 
 ###
 # 13. List all bookings for hotel
-GET {{host}}/api/hotels/{{hotelId}}/booking/admin
+GET {{host}}/api/hotels/{{hotelId}}/bookings/admin
 Authorization: Bearer {{token}}
 
+GET {{host}}/api/hotels?pageNumber=3&pageSize=20&minRating=4.1
+Authorization: Bearer {{token}}
 ###
+
+GET {{host}}/api/countries/1/hotels?search=o
+Authorization: Bearer {{token}}

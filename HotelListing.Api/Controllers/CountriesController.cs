@@ -1,6 +1,8 @@
 using HotelListing.Api.Application.Contracts;
 using HotelListing.Api.Application.DTOs.Country;
 using HotelListing.Api.Application.DTOs.Hotel;
+using HotelListing.Api.Common.Constants;
+using HotelListing.Api.Common.Models.Filtering;
 using HotelListing.Api.Common.Models.Paging;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,14 +12,25 @@ namespace HotelListing.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class CountriesController(ICountriesService countriesService) : BaseApiController
 {
     // GET: api/Countries
     [HttpGet]
-    [Authorize]
-    public async Task<ActionResult<IEnumerable<GetCountriesDto>>> GetCountries()
+    public async Task<ActionResult<IEnumerable<GetCountriesDto>>> GetCountries(CountryFilterParameters filters)
     {
-        var result = await countriesService.GetCountriesAsync();
+        var result = await countriesService.GetCountriesAsync(filters);
+        return ToActionResult(result);
+    }
+
+    // GET: api/Countries/{id}/hotels
+    [HttpGet("{countryId:int}/hotels")]
+    public async Task<ActionResult<GetCountryHotelsDto>> GetCountryHotels(
+        [FromRoute] int countryId,
+        [FromQuery] PaginationParameters paginationParameters,
+        [FromQuery] CountryFilterParameters filters)
+    {
+        var result = await countriesService.GetCountryHotelsAsync(countryId, paginationParameters, filters);
         return ToActionResult(result);
     }
 
@@ -29,18 +42,9 @@ public class CountriesController(ICountriesService countriesService) : BaseApiCo
         return ToActionResult(result);
     }
 
-    [HttpGet("{countryId:int}/hotels")]
-    public async Task<ActionResult<PagedResult<GetHotelDto>>> GetCountryHotels(
-       [FromRoute] int countryId,
-       [FromQuery] PaginationParameters paginationParameters)
-    {
-        var result = await countriesService.GetCountryHotelsAsync(countryId, paginationParameters);
-        return ToActionResult(result);
-    }
-
     // PUT: api/Countries/5
     [HttpPut("{id}")]
-    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = RoleNames.Administrator)]
     public async Task<IActionResult> PutCountry(int id, UpdateCountryDto updateDto)
     {
         var result = await countriesService.UpdateCountryAsync(id, updateDto);
@@ -49,6 +53,7 @@ public class CountriesController(ICountriesService countriesService) : BaseApiCo
 
     // POST: api/Countries
     [HttpPost]
+    [Authorize(Roles = RoleNames.Administrator)]
     public async Task<ActionResult<GetCountryDto>> PostCountry(CreateCountryDto createDto)
     {
         var result = await countriesService.CreateCountryAsync(createDto);
@@ -59,7 +64,7 @@ public class CountriesController(ICountriesService countriesService) : BaseApiCo
 
     // DELETE: api/Countries/5
     [HttpDelete("{id}")]
-    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = RoleNames.Administrator)]
     public async Task<IActionResult> DeleteCountry(int id)
     {
         var result = await countriesService.DeleteCountryAsync(id);
