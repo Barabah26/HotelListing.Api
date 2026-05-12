@@ -7,7 +7,7 @@
 @id=3
 
 GET {{HotelListing.Api_HostAddress}}/api/countries
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YzBmODg4ZC0zZTEwLTQ0ZWUtOGQxMi1mYTgxZGNlNzgwY2EiLCJlbWFpbCI6ImhvdGVsYWRtaW4yQGxvY2FsaG9zdC5jb20iLCJqdGkiOiI0ZGYzM2I0OS1jMzg2LTRmZTctOGM3ZS1mZDlkYWQ0NTE1YjUiLCJuYW1lIjoiQWRtaW4sIEhvdGVsIiwiZXhwIjoxNzc4NDIzODI4LCJpc3MiOiJIb3RlbExpc3RpbmdBUEkiLCJhdWQiOiJIb3RlbExpc3RpbmdBUElDbGllbnQifQ.hq_m5RCuGwpqdWG1uUvsjGRgM3XceTZDp1pZOJh_YZI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxYWQ5ZWEzNi1mZjI2LTRiOTMtYmEzNi1lZmY4MTkwYjU3ZTEiLCJlbWFpbCI6ImFkbWluMUBsb2NhbGhvc3QuY29tIiwianRpIjoiYWZhN2RjZjMtM2U4Ni00NzU0LWIxZGUtY2RkMjM4ZmQ0YWQ2IiwibmFtZSI6Ikxhc3QsIEZpcnN0IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTc3ODYwNjA3NCwiaXNzIjoiSG90ZWxMaXN0aW5nQVBJIiwiYXVkIjoiSG90ZWxMaXN0aW5nQVBJQ2xpZW50In0.sz8nxv2Sev_qgghDolEHzOimnMw9yntwj_upbZRavXo
 ###
 
 POST {{HotelListing.Api_HostAddress}}/api/countries
@@ -15,8 +15,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2YzBmODg4Z
 Content-Type: {{json}}
 
 {
-  "name": "Ocean Coral",
-  "shortName": "OC"
+  "name": "Hotel Lviv",
+  "shortName": "HL"
 }
 
 ###
@@ -43,13 +43,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4MjFlNzYwZ
 ###
 
 POST {{HotelListing.Api_HostAddress}}/api/hotels
-Content-Type: {{json}}
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwNzAyOWQwNC1hNWEyLTQ0NDQtODE1Yi02NzUyYzM0ZWQ4NzgiLCJlbWFpbCI6InVzZXJAbG9jYWxob3N0LmNvbSIsImp0aSI6IjhiNmJmMGMyLWVkNzItNDdjMy04ZmM5LTI1OTQ1YWNiYzQwNyIsIm5hbWUiOiJMYXN0LCBGaXJzdCIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluaXN0cmF0b3IiLCJleHAiOjE3Nzg0MTMyMDUsImlzcyI6IkhvdGVsTGlzdGluZ0FQSSIsImF1ZCI6IkhvdGVsTGlzdGluZ0FQSUNsaWVudCJ9.76u8QWNP3YeaXZOG5_vuN8jg6IiW0XWDZxnzDppeEhI
-{
-  "Name": "Moon Palace",
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxYWQ5ZWEzNi1mZjI2LTRiOTMtYmEzNi1lZmY4MTkwYjU3ZTEiLCJlbWFpbCI6ImFkbWluMUBsb2NhbGhvc3QuY29tIiwianRpIjoiYWZhN2RjZjMtM2U4Ni00NzU0LWIxZGUtY2RkMjM4ZmQ0YWQ2IiwibmFtZSI6Ikxhc3QsIEZpcnN0IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTc3ODYwNjA3NCwiaXNzIjoiSG90ZWxMaXN0aW5nQVBJIiwiYXVkIjoiSG90ZWxMaXN0aW5nQVBJQ2xpZW50In0.sz8nxv2Sev_qgghDolEHzOimnMw9yntwj_upbZRavXo
+{  
+"Name": "Moon Palace",
   "Address": "Ocho Rios, Jamaica",
   "Rating": 5,
-  "CountryId": 3
+  "CountryId": 4
 }
 
 ###

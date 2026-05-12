@@ -1,20 +1,20 @@
 ### Variables
 @json = application/json
 @host=https://localhost:7137
-@hotelId=2
+@hotelId=4
 @bookingId=1
 @today={{$localDatetime iso8601}} 
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwNzAyOWQwNC1hNWEyLTQ0NDQtODE1Yi02NzUyYzM0ZWQ4NzgiLCJlbWFpbCI6InVzZXJAbG9jYWxob3N0LmNvbSIsImp0aSI6IjhiNmJmMGMyLWVkNzItNDdjMy04ZmM5LTI1OTQ1YWNiYzQwNyIsIm5hbWUiOiJMYXN0LCBGaXJzdCIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluaXN0cmF0b3IiLCJleHAiOjE3Nzg0MTMyMDUsImlzcyI6IkhvdGVsTGlzdGluZ0FQSSIsImF1ZCI6IkhvdGVsTGlzdGluZ0FQSUNsaWVudCJ9.76u8QWNP3YeaXZOG5_vuN8jg6IiW0XWDZxnzDppeEhI
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ZmFlMmIwZi1lNmFkLTRkOWQtOWQ1NS1lOTZmZDM0YmUwZjkiLCJlbWFpbCI6ImFkbWluMkBsb2NhbGhvc3QuY29tIiwianRpIjoiNmIwOTY1YzgtNDM0YS00N2Y2LTljOTUtYThiYTkzY2YxY2U4IiwibmFtZSI6IkFkbWluLCBIb3RlbCIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluaXN0cmF0b3IiLCJleHAiOjE3Nzg2MDczMjUsImlzcyI6IkhvdGVsTGlzdGluZ0FQSSIsImF1ZCI6IkhvdGVsTGlzdGluZ0FQSUNsaWVudCJ9.Z7sUzs_BMxOBOWJxH2Nu7NhjwV5o29qOpwN1ZYvM2GI
 ###
 POST {{host}}/api/auth/register
 Content-Type: application/json
 
 {
-  "email": "hoteladmin2@localhost.com",
+  "email": "admin2@localhost.com",
   "password": "P@ssword1",
   "firstName":"Hotel",
   "lastName": "Admin",
-  "role": "HOTEL ADMIN",
+  "role": "Administrator",
   "associatedHotelId": 3
 }
 ###
@@ -22,7 +22,7 @@ POST {{host}}/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "hoteladmin2@localhost.com",
+  "email": "admin2@localhost.com",
   "password": "P@ssword1"
 }
 ###
@@ -36,7 +36,7 @@ Content-Type: application/json
 
 ###
 # 1. CreateBookingDto - Happy path (3 nights)
-POST {{host}}/api/hotels/{{hotelId}}/bookings
+POST {{host}}/api/hotels/{{hotelId}}/booking
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
@@ -166,7 +166,7 @@ PUT {{host}}/api/hotels/{{hotelId}}/bookings/{{bookingId}}/cancel
 
 ###
 # 13. List all bookings for hotel
-GET {{host}}/api/hotels/{{hotelId}}/bookings/admin
+GET {{host}}/api/hotels/{{hotelId}}/booking/admin
 Authorization: Bearer {{token}}
 
 ###

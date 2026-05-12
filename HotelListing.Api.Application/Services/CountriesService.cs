@@ -2,7 +2,10 @@
 using AutoMapper.QueryableExtensions;
 using HotelListing.Api.Application.Contracts;
 using HotelListing.Api.Application.DTOs.Country;
+using HotelListing.Api.Application.DTOs.Hotel;
 using HotelListing.Api.Common.Constants;
+using HotelListing.Api.Common.Models.Extensions;
+using HotelListing.Api.Common.Models.Paging;
 using HotelListing.Api.Common.Results;
 using HotelListing.Api.Domain;
 using Microsoft.AspNetCore.Mvc;
@@ -117,5 +120,26 @@ public class CountriesService(HotelListingDbContext context, IMapper mapper) : I
     {
         return await context.Countries
             .AnyAsync(c => c.Name.ToLower().Trim() == name.ToLower().Trim());
+    }
+
+    public async Task<Result<PagedResult<GetHotelDto>>> GetCountryHotelsAsync(int countryId, PaginationParameters paginationParameters)
+    {
+        var exists = await CountryExistsAsync(countryId);
+        if (!exists)
+        {
+            return Result<PagedResult<GetHotelDto>>.Failure(
+                new Error(ErrorCodes.NotFound, $"Country '{countryId}' was not found."));
+        }
+
+        var query = context.Hotels
+            .Where(h => h.CountryId == countryId)
+            .Select(h => h.Name)
+            .ProjectTo<GetHotelDto>(mapper.ConfigurationProvider);
+
+        var paged = await query.ToPagedResultAsync(paginationParameters);
+
+       
+
+        return Result<PagedResult<GetHotelDto>>.Success(paged);
     }
 }
