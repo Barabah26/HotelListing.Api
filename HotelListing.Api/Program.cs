@@ -1,6 +1,7 @@
 using HotelListing.Api.Application.Contracts;
 using HotelListing.Api.Application.MappingProfiles;
 using HotelListing.Api.Application.Services;
+using HotelListing.Api.CachePolicies;
 using HotelListing.Api.Common.Constants;
 using HotelListing.Api.Common.Models.Config;
 using HotelListing.Api.Domain;
@@ -18,7 +19,25 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container
 var connectionString = builder.Configuration.GetConnectionString("HotelListingConnectionString");
-builder.Services.AddDbContext<HotelListingDbContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddDbContextPool<HotelListingDbContext>(options => {
+    options.UseSqlServer(connectionString, sqlOptions => {
+        sqlOptions.CommandTimeout(30);
+        sqlOptions.EnableRetryOnFailure(
+            maxRetryCount: 3,
+            maxRetryDelay: TimeSpan.FromSeconds(5),
+            errorNumbersToAdd: null
+        );
+    });
+
+    if (builder.Environment.IsDevelopment())
+    {
+        options.EnableSensitiveDataLogging();
+        options.EnableDetailedErrors();
+    }
+
+    // ? Optional: Global no-tracking (only if most operations are read-only)
+    // options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+}, poolSize: 128); builder.Services.AddDbContext<HotelListingDbContext>(options => options.UseSqlServer(connectionString));
 
 builder.Services.AddControllers()
     .AddNewtonsoftJson()
@@ -72,6 +91,14 @@ builder.Services.AddAuthorization();
 builder.Services.AddAutoMapper(cfg => { }, typeof(HotelMappingProfile).Assembly);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+//builder.Services.AddMemoryCache();
+builder.Services.AddOutputCache(options => {
+    options.AddPolicy(CacheConstants.AuthenticatedUserCachingPolicy, builder =>
+    {
+        builder.AddPolicy<AuthenticatedUserCachingPolicy>()
+        .SetCacheKeyPrefix(CacheConstants.AuthenticatedUserCachingPolicyTag);
+    }, true);
+});
 
 
 var app = builder.Build();
@@ -88,6 +115,7 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseOutputCache();
 
 app.MapControllers();
 
